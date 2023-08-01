@@ -1,0 +1,66 @@
+set BoardName  si_0002
+create_project ${BoardName}_sfp /devel/boards_test_sfp/${BoardName}_sfp -part xc7k325tffg676-2
+set work_directory [get_property DIRECTORY [current_project]]; cd $work_directory; pwd
+
+add_files ../sfp/sys_ctrl_single.v
+add_files ../sfp/sync_signal.v
+add_files ../sfp/signal_counter.v
+add_files ../sfp/test_eth10g.sv
+add_files ../sfp/test_pcspma.sv
+
+add_files -fileset constrs_1  ../sfp/${BoardName}.xdc
+
+create_ip -name clk_wiz -vendor xilinx.com -library ip -version 6.0 -module_name sysclk_wiz
+set_property -dict [list \
+  CONFIG.CLKOUT2_JITTER {114.829} \
+  CONFIG.CLKOUT2_PHASE_ERROR {98.575} \
+  CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {200.000} \
+  CONFIG.CLKOUT2_USED {true} \
+  CONFIG.ENABLE_CLOCK_MONITOR {false} \
+  CONFIG.MMCM_CLKOUT1_DIVIDE {5} \
+  CONFIG.NUM_OUT_CLKS {2} \
+  CONFIG.PRIMITIVE {MMCM} \
+  CONFIG.USE_RESET {false} \
+] [get_ips sysclk_wiz]
+
+create_ip -name vio -vendor xilinx.com -library ip -module_name vio_4
+set_property -dict [list \
+  CONFIG.C_NUM_PROBE_OUT {0} \
+  CONFIG.C_NUM_PROBE_IN {4} \
+  CONFIG.C_PROBE_IN0_WIDTH {128} \
+  CONFIG.C_PROBE_IN1_WIDTH {128} \
+  CONFIG.C_PROBE_IN2_WIDTH {128} \
+  CONFIG.C_PROBE_IN3_WIDTH {128} \
+] [get_ips vio_4]
+##########################################
+create_ip -name axi_10g_ethernet -vendor xilinx.com -library ip -version 3.1 -module_name eth10g
+set_property -dict [list \
+  CONFIG.Management_Frequency {100.00} \
+  CONFIG.Management_Interface {true} \
+  CONFIG.SupportLevel {1} \
+] [get_ips eth10g]
+
+create_ip -name axi_10g_ethernet -vendor xilinx.com -library ip -version 3.1 -module_name eth10s
+set_property -dict [list \
+  CONFIG.Management_Frequency {100.00} \
+  CONFIG.Statistics_Gathering {false} \
+  CONFIG.SupportLevel {0} \
+] [get_ips eth10s]
+
+add_files ../sfp/${BoardName}_eth10g.sv
+set_property top ${BoardName}_eth10g [current_fileset]
+##########################################
+create_ip -name ten_gig_eth_pcs_pma -vendor xilinx.com -library ip -version 6.0 -module_name pcspma_m
+set_property -dict [list \
+  CONFIG.MDIO_Management {false} \
+  CONFIG.SupportLevel {1} \
+] [get_ips pcspma_m]
+
+create_ip -name ten_gig_eth_pcs_pma -vendor xilinx.com -library ip -version 6.0 -module_name pcspma_s
+set_property -dict [list \
+  CONFIG.MDIO_Management {false} \
+] [get_ips pcspma_s]
+
+add_files ../sfp/${BoardName}_pcspma.sv
+set_property top ${BoardName}_pcspma [current_fileset]
+##########################################
