@@ -15,13 +15,14 @@ module si_0002_pcspma #(
 //////////////////////////////////////////////////////////////////////////////
   wire sysclk_100m;
   wire sys_reset;
+  wire user_reset;
   sys_ctrl #(
     .IDELAYCTRL_SIM_DEVICE ("NONE")
   )
   sys_ctrl_inst(
     .sysclk_single_in (clk_100M        ),
     .sysclk_100m_out  (sysclk_100m     ),
-    .user_reset_in    (1'b0            ),
+    .user_reset_in    (user_reset      ),
     .sys_reset_out    (sys_reset       )
   );
 //////////////////////////////////////////////////////////////////////////////
@@ -31,6 +32,7 @@ module si_0002_pcspma #(
   test_pcspma_i(
     .sysclk_100m     (sysclk_100m     ),
     .sys_reset       (sys_reset       ),
+    .user_reset_out  (user_reset      ),
     .sleds           (sleds           ),
     .sfp_gt_refclk_p (sfp_gt_refclk_p ),
     .sfp_gt_refclk_n (sfp_gt_refclk_n ),

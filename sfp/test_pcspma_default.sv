@@ -77,27 +77,27 @@ module test_pcspma #(
     .reset_counter_done_out   (reset_counter_done  ),
     .areset_datapathclk_out   (                    ),
     .sim_speedup_control      (1'b1                ),
-    .gt0_eyescanreset         (0),
-    .gt0_eyescantrigger       (0),
-    .gt0_txprbsforceerr       (0),
-    .gt0_rxcdrhold            (0),//RX Clock Data Recovery Hold (RX CDR Hold): 0=正常; 1=CDR鎖定當前時鐘，不再調整;
-    .gt0_txpolarity           (0),//設定 TX 差分對 (TXP/TXN) 的極性: 0=正常, 1=對調;
-    .gt0_rxpolarity           (0),//設定 RX 差分對 (RXP/RXN) 的極性: 0=正常, 1=對調;
-    .gt0_rxrate               (0),//[2:0] 0=全速運行(No division)x1:10.3125Gbps; 1=1/2速率(÷2); 2=1/4速率(÷4); 3=1/8速率(÷8)
-    .gt0_txpmareset           (sys_reset),//tx pma reset;
-    .gt0_rxpmareset           (sys_reset),//rx pma reset;
-    .gt0_rxdfelpmreset        (sys_reset),//rx dfe lpm reset
-    .gt0_rxlpmen              (0),// RX Low Power Mode Enable (RX LPM Enable): 1=LPM; 0=CTLE+DFE;
-    .gt0_txprecursor          (5'b00111),// 1.67 dB
-    .gt0_txpostcursor         (5'b00011),// 0.68 dB
-    .gt0_txdiffctrl           (4'b1100 ),// 1018 mV
-    .gt0_eyescandataerror     (),//output         
-    .gt0_txbufstatus          (),//output  [1 : 0]
-    .gt0_txresetdone          (),//output         
-    .gt0_rxresetdone          (),//output         
-    .gt0_rxbufstatus          (),//output  [2 : 0]
-    .gt0_rxprbserr            (),//output         
-    .gt0_dmonitorout          (),//output  [7 : 0]
+//  .gt0_eyescanreset         (0),
+//  .gt0_eyescantrigger       (0),
+//  .gt0_txprbsforceerr       (0),
+//  .gt0_rxcdrhold            (0),//RX Clock Data Recovery Hold (RX CDR Hold): 0=正常; 1=CDR鎖定當前時鐘，不再調整;
+//  .gt0_txpolarity           (0),//設定 TX 差分對 (TXP/TXN) 的極性: 0=正常, 1=對調;
+//  .gt0_rxpolarity           (0),//設定 RX 差分對 (RXP/RXN) 的極性: 0=正常, 1=對調;
+//  .gt0_rxrate               (0),//[2:0] 0=全速運行(No division)x1:10.3125Gbps; 1=1/2速率(÷2); 2=1/4速率(÷4); 3=1/8速率(÷8)
+//  .gt0_txpmareset           (sys_reset),//tx pma reset;
+//  .gt0_rxpmareset           (sys_reset),//rx pma reset;
+//  .gt0_rxdfelpmreset        (sys_reset),//rx dfe lpm reset
+//  .gt0_rxlpmen              (0),// RX Low Power Mode Enable (RX LPM Enable): 1=LPM; 0=CTLE+DFE;
+//  .gt0_txprecursor          (5'b00111),// 1.67 dB
+//  .gt0_txpostcursor         (5'b00011),// 0.68 dB
+//  .gt0_txdiffctrl           (4'b1100 ),// 1018 mV
+//  .gt0_eyescandataerror     (),//output         
+//  .gt0_txbufstatus          (),//output  [1 : 0]
+//  .gt0_txresetdone          (),//output         
+//  .gt0_rxresetdone          (),//output         
+//  .gt0_rxbufstatus          (),//output  [2 : 0]
+//  .gt0_rxprbserr            (),//output         
+//  .gt0_dmonitorout          (),//output  [7 : 0]
 
     .txusrclk_out             (txusrclk            ),
     .txusrclk2_out            (txusrclk2           ),
@@ -152,27 +152,27 @@ if (SFP_COUNT > 1) begin
     .gtrxreset                (gtrxreset           ),
     .reset_counter_done       (reset_counter_done  ),
     .sim_speedup_control      (1'b1                ),
-    .gt0_eyescanreset         (0),
-    .gt0_eyescantrigger       (0),
-    .gt0_txprbsforceerr       (0),
-    .gt0_rxcdrhold            (0),//RX Clock Data Recovery Hold (RX CDR Hold): 0=正常; 1=CDR鎖定當前時鐘，不再調整;
-    .gt0_txpolarity           (0),//設定 TX 差分對 (TXP/TXN) 的極性: 0=正常, 1=對調;
-    .gt0_rxpolarity           (0),//設定 RX 差分對 (RXP/RXN) 的極性: 0=正常, 1=對調;
-    .gt0_rxrate               (0),//[2:0] 0=全速運行(No division)x1:10.3125Gbps; 1=1/2速率(÷2); 2=1/4速率(÷4); 3=1/8速率(÷8)
-    .gt0_txpmareset           (sys_reset),//tx pma reset;
-    .gt0_rxpmareset           (sys_reset),//rx pma reset;
-    .gt0_rxdfelpmreset        (sys_reset),//rx dfe lpm reset
-    .gt0_rxlpmen              (0),// RX Low Power Mode Enable (RX LPM Enable): 1=LPM; 0=CTLE+DFE;
-    .gt0_txprecursor          (5'b00111),// 1.67 dB
-    .gt0_txpostcursor         (5'b00011),// 0.68 dB
-    .gt0_txdiffctrl           (4'b1100 ),// 1018 mV
-    .gt0_eyescandataerror     (),//output         
-    .gt0_txbufstatus          (),//output  [1 : 0]
-    .gt0_txresetdone          (),//output         
-    .gt0_rxresetdone          (),//output         
-    .gt0_rxbufstatus          (),//output  [2 : 0]
-    .gt0_rxprbserr            (),//output         
-    .gt0_dmonitorout          (),//output  [7 : 0]
+//  .gt0_eyescanreset         (0),
+//  .gt0_eyescantrigger       (0),
+//  .gt0_txprbsforceerr       (0),
+//  .gt0_rxcdrhold            (0),//RX Clock Data Recovery Hold (RX CDR Hold): 0=正常; 1=CDR鎖定當前時鐘，不再調整;
+//  .gt0_txpolarity           (0),//設定 TX 差分對 (TXP/TXN) 的極性: 0=正常, 1=對調;
+//  .gt0_rxpolarity           (0),//設定 RX 差分對 (RXP/RXN) 的極性: 0=正常, 1=對調;
+//  .gt0_rxrate               (0),//[2:0] 0=全速運行(No division)x1:10.3125Gbps; 1=1/2速率(÷2); 2=1/4速率(÷4); 3=1/8速率(÷8)
+//  .gt0_txpmareset           (sys_reset),//tx pma reset;
+//  .gt0_rxpmareset           (sys_reset),//rx pma reset;
+//  .gt0_rxdfelpmreset        (sys_reset),//rx dfe lpm reset
+//  .gt0_rxlpmen              (0),// RX Low Power Mode Enable (RX LPM Enable): 1=LPM; 0=CTLE+DFE;
+//  .gt0_txprecursor          (5'b00111),// 1.67 dB
+//  .gt0_txpostcursor         (5'b00011),// 0.68 dB
+//  .gt0_txdiffctrl           (4'b1100 ),// 1018 mV
+//  .gt0_eyescandataerror     (),//output         
+//  .gt0_txbufstatus          (),//output  [1 : 0]
+//  .gt0_txresetdone          (),//output         
+//  .gt0_rxresetdone          (),//output         
+//  .gt0_rxbufstatus          (),//output  [2 : 0]
+//  .gt0_rxprbserr            (),//output         
+//  .gt0_dmonitorout          (),//output  [7 : 0]
 
     .txusrclk                 (txusrclk            ),
     .txusrclk2                (txusrclk2           ),  

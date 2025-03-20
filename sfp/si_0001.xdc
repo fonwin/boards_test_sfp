@@ -8,6 +8,8 @@ set_property BITSTREAM.GENERAL.COMPRESS true [current_design]
 #######################################################################
 ########## delay system reset ##########
   set_false_path -from [get_pins  sys_ctrl_inst/delay_rst_d*/C]
+  set_false_path -to   [get_pins  sys_ctrl_inst/sync_reset_user_reset_inst/sync_reg*/PRE]
+  
 
 #######################################################################
 ########## CLOCK CONSTRAINTS FOR the BOARD ##########

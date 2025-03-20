@@ -5,11 +5,10 @@ set work_directory [get_property DIRECTORY [current_project]]; cd $work_director
 add_files ../sfp/sys_ctrl_single.v
 add_files ../sfp/sync_signal.v
 add_files ../sfp/signal_counter.v
-add_files ../sfp/test_eth10g.sv
-add_files ../sfp/test_pcspma.sv
 
 add_files -fileset constrs_1  ../sfp/${BoardName}.xdc
 
+##################################################
 create_ip -name clk_wiz -vendor xilinx.com -library ip -version 6.0 -module_name sysclk_wiz
 set_property -dict [list \
   CONFIG.CLKOUT2_JITTER {114.829} \
@@ -32,7 +31,21 @@ set_property -dict [list \
   CONFIG.C_PROBE_IN2_WIDTH {128} \
   CONFIG.C_PROBE_IN3_WIDTH {128} \
 ] [get_ips vio_4]
-##########################################
+
+create_ip -name vio -vendor xilinx.com -library ip -module_name vio_6
+set_property -dict [list \
+  CONFIG.C_NUM_PROBE_OUT {2} \
+  CONFIG.C_PROBE_OUT0_WIDTH {1} \
+  CONFIG.C_PROBE_OUT1_WIDTH {1} \
+  CONFIG.C_NUM_PROBE_IN {6} \
+  CONFIG.C_PROBE_IN0_WIDTH {128} \
+  CONFIG.C_PROBE_IN1_WIDTH {128} \
+  CONFIG.C_PROBE_IN2_WIDTH {128} \
+  CONFIG.C_PROBE_IN3_WIDTH {128} \
+  CONFIG.C_PROBE_IN4_WIDTH {128} \
+  CONFIG.C_PROBE_IN5_WIDTH {128} \
+] [get_ips vio_6]
+##################################################
 create_ip -name axi_10g_ethernet -vendor xilinx.com -library ip -version 3.1 -module_name eth10g
 set_property -dict [list \
   CONFIG.Management_Frequency {100.00} \
@@ -47,9 +60,10 @@ set_property -dict [list \
   CONFIG.SupportLevel {0} \
 ] [get_ips eth10s]
 
+add_files ../sfp/test_eth10g.sv
 add_files ../sfp/${BoardName}_eth10g.sv
 set_property top ${BoardName}_eth10g [current_fileset]
-##########################################
+##################################################
 create_ip -name ten_gig_eth_pcs_pma -vendor xilinx.com -library ip -version 6.0 -module_name pcspma_m
 set_property -dict [list \
   CONFIG.MDIO_Management {false} \
@@ -61,6 +75,12 @@ set_property -dict [list \
   CONFIG.MDIO_Management {false} \
 ] [get_ips pcspma_s]
 
+# 若使用 test_pcspma.sv 則上面的 pcspma_* 需要加上: CONFIG.TransceiverControl {true}
+add_files ../sfp/test_pcspma_default.sv
+
 add_files ../sfp/${BoardName}_pcspma.sv
 set_property top ${BoardName}_pcspma [current_fileset]
-##########################################
+##################################################
+# ------------------------------------------------
+launch_runs  impl_1 -to_step write_bitstream -jobs 12
+# ------------------------------------------------

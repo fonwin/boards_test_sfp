@@ -339,6 +339,14 @@ generate for(gL = 0; gL < SFP_COUNT; gL = gL + 1) begin
 end endgenerate
 
 //////////////////////////////////////////////////////////////////////////////
+if (SFP_COUNT == 1) begin
+  vio_2
+  vio_2_i(
+    .probe_in0  (rx_ready_cnt[0] ),
+    .probe_in1  (rx_frame_cnt[0] ),
+    .clk        (vio_clk         )
+  );
+end else begin
   vio_4
   vio_4_i(
     .probe_in0  (rx_ready_cnt[0] ),
@@ -347,6 +355,7 @@ end endgenerate
     .probe_in3  (rx_frame_cnt[1] ),
     .clk        (vio_clk         )
   );
+end
 //////////////////////////////////////////////////////////////////////////////
 endmodule
 //////////////////////////////////////////////////////////////////////////////

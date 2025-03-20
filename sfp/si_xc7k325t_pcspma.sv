@@ -16,6 +16,7 @@ module si_xc7k325t_pcspma #(
 //////////////////////////////////////////////////////////////////////////////
   wire sysclk_100m;
   wire sys_reset;
+  wire user_reset;
   sys_ctrl#(
     .IDELAYCTRL_SIM_DEVICE ("NONE")
   )
@@ -23,7 +24,7 @@ module si_xc7k325t_pcspma #(
     .sysclk_p        (clk_200M_p      ),
     .sysclk_n        (clk_200M_n      ),
     .sysclk_100m_out (sysclk_100m     ),
-    .user_reset_in   (1'b0            ),
+    .user_reset_in   (user_reset      ),
     .sys_reset_out   (sys_reset       )
   );
 //////////////////////////////////////////////////////////////////////////////
@@ -33,6 +34,7 @@ module si_xc7k325t_pcspma #(
   test_pcspma_i(
     .sysclk_100m     (sysclk_100m     ),
     .sys_reset       (sys_reset       ),
+    .user_reset_out  (user_reset      ),
     .sleds           (sleds           ),
     .sfp_gt_refclk_p (sfp_gt_refclk_p ),
     .sfp_gt_refclk_n (sfp_gt_refclk_n ),
